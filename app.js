@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Store the HASH, not the plain password
   }, { collection: 'UserSynthetics' });
-  
+
 const User = mongoose.model('User', userSchema);
 
 
@@ -60,11 +60,27 @@ app.use(session({
     cookie: { secure: false }, // Set to true if using HTTPS
   }));
   
-  app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(express.static(path.join(__dirname, 'public'))); // Use path.join and __dirname
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public'))); // Use path.join and __dirname
   
+app.use((req, res, next) => {
+    const ip = req.ip 
+    console.log(`Request IP: ${ip}`);
+    next();
+  });
+
+
+
+
+
+
+
+
+
+
 
 app.get('/', (req, res) => {
+
   if (req.session.userId) { // Check if user is logged in
     res.redirect('/welcome'); // Redirect to welcome page
   } else {
@@ -80,6 +96,7 @@ app.post('/login', async (req, res) => {
     try {
       const user = await User.findOne({ username });
       if (!user) {
+        console.log(`User ${username} does not exist and tried to login`)
         return res.send('Invalid username or password'); // Handle invalid username
       }
   
@@ -87,8 +104,11 @@ app.post('/login', async (req, res) => {
       if (passwordMatch) {
         req.session.userId = user._id; // Store user ID in session
         req.session.username = user.username; // Optionally store username
+        
+        console.log(`User ${user.username} has logged in`)
         res.redirect('/welcome');
       } else {
+        console.log(`User ${username} proviced the wrong password`)
         res.send('Invalid username or password'); // Handle invalid password
       }
     } catch (err) {
