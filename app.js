@@ -1,18 +1,21 @@
 const express = require('express');
+const path = require('path')
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt'); // For password hashing
 const app = express();
-const port = 3000;
+require('dotenv').config();
+const port = process.env.PORT || 3000;
 
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/syntheticstest', { // Replace with your DB name
+const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/syntheticstest'; // Fallback to localhost
+mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }).then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+}).then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 
 
@@ -21,9 +24,12 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Store the HASH, not the plain password
   });
-
-
 const User = mongoose.model('User', userSchema);
+
+
+// EJS setup
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Set views directory correctly
 
 
 // Session Configuration
@@ -34,10 +40,9 @@ app.use(session({
     cookie: { secure: false }, // Set to true if using HTTPS
   }));
   
-
-
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(express.static('public')); // Serve static files (HTML, CSS, JS)
+  app.use(express.static(path.join(__dirname, 'public'))); // Use path.join and __dirname
+  
 
 app.get('/', (req, res) => {
   if (req.session.userId) { // Check if user is logged in
@@ -75,11 +80,11 @@ app.post('/login', async (req, res) => {
 
   app.get('/welcome', (req, res) => {
     if (req.session.userId) {
-       res.sendFile(__dirname + '/public/welcome.html'); // Serve welcome page
+        res.render('welcome', { username: req.session.username }); // Render 'welcome.ejs'
     } else {
-      res.redirect('/'); // Redirect to login if not logged in
+        res.redirect('/');
     }
-  });
+});
   
   app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
