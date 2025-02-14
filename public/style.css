@@ -1,0 +1,73 @@
+/* General styles */
+body {
+    font-family: 'Poppins', sans-serif; /* Example font, replace as needed */
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4; /* Example background color */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    min-height: 100vh;      /* Ensure full viewport height */
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 350px; /* Adjust as needed */
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333; /* Example heading color */
+}
+
+label {
+    display: block; /* Make labels stack on top of inputs */
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 12px); /* Full width, accounting for padding */
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+button {
+    background-color: #007bff; /* Example button color */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%; /* Make button full width */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker on hover */
+}
+
+a {
+    display: block; /* Make the logout link a block element */
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Flexbox for centering (alternative approach) */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
