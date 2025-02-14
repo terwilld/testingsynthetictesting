@@ -9,12 +9,31 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 
 
+const environment = process.env.environment || 'development'; // Default to development if not set
+
+
 // MongoDB Connection
-const dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/syntheticstest'; // Fallback to localhost
+let dbURI;
+if (environment === 'localhost' || environment === 'development') {
+  dbURI = process.env.LOCAL_MONGODB_URI || 'mongodb://localhost:27017/syntheticstest'; // Local URI, also with a fallback
+  console.log("Connecting to local MongoDB");
+} else if (environment === 'production') {
+  dbURI = process.env.PRODUCTION_MONGODB_URI;  // Production URI - MUST be set in .env
+  if (!dbURI) {
+      console.error("PRODUCTION_MONGODB_URI environment variable is not set!");
+      process.exit(1); // Exit if production URI is missing
+  }
+  console.log("Connecting to production MongoDB");
+} else {
+    // Handle other environments or throw an error
+    console.error(`Unknown environment: ${environment}`);
+    process.exit(1); // Exit with an error code
+}
+console.log(environment)
 mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-}).then(() => console.log('Connected to MongoDB'))
+}).then(() => console.log(`Mongo connected to  environment: ${environment}`))
 .catch(err => console.error('MongoDB connection error:', err));
 
 
@@ -23,7 +42,8 @@ mongoose.connect(dbURI, {
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true }, // Store the HASH, not the plain password
-  });
+  }, { collection: 'UserSynthetics' });
+  
 const User = mongoose.model('User', userSchema);
 
 
