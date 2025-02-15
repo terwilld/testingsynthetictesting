@@ -1,13 +1,18 @@
 /* General styles */
 body {
-    font-family: 'Poppins', sans-serif; /* Example font, replace as needed */
+    font-family: 'Poppins', sans-serif;
+    /* Example font, replace as needed */
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Example background color */
+    background-color: #f4f4f4;
+    /* Example background color */
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;     /* Center vertically */
-    min-height: 100vh;      /* Ensure full viewport height */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    min-height: 100vh;
+    /* Ensure full viewport height */
 }
 
 .container {
@@ -15,45 +20,59 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 350px; /* Adjust as needed */
+    width: 350px;
+    display: flex;
+    /* Enable flexbox for the container */
+    flex-direction: column;
+    /* Stack elements vertically */
 }
 
-h1, h2 {
+h1,
+h2 {
     text-align: center;
-    color: #333; /* Example heading color */
+    color: #333;
+    /* Example heading color */
 }
+
 
 label {
-    display: block; /* Make labels stack on top of inputs */
+    display: block;
+    /* Make labels stack on top of inputs */
     margin-bottom: 5px;
 }
 
 input[type="text"],
 input[type="password"] {
-    width: calc(100% - 12px); /* Full width, accounting for padding */
+    width: calc(100% - 12px);
+    /* Full width, accounting for padding */
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Include padding in width calculation */
+    box-sizing: border-box;
+    /* Include padding in width calculation */
 }
 
 button {
-    background-color: #007bff; /* Example button color */
+    background-color: #007bff;
+    /* Example button color */
     color: #fff;
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%; /* Make button full width */
+    width: 100%;
+    /* Make button full width */
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker on hover */
+    background-color: #0056b3;
+    /* Darker on hover */
 }
 
 a {
-    display: block; /* Make the logout link a block element */
+    display: block;
+    /* Make the logout link a block element */
     text-align: center;
     margin-top: 10px;
     color: #007bff;
@@ -70,4 +89,65 @@ a:hover {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+}
+
+/* Button Container Styles */
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    background-color: #008080;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 20px;
+    /* Space between link and buttons */
+}
+
+
+/* Button Styles */
+.button-container button {
+    padding: 20px;
+    /* Increased padding */
+    border: none;
+    border-radius: 8px;
+    /* More rounded edges */
+    cursor: pointer;
+    width: 80px;
+    /* Increased width */
+    height: 80px;
+    /* Increased height */
+    flex-grow: 0;
+    /* Prevent buttons from stretching */
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    /* Slightly larger font */
+}
+
+.red-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.green-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.blue-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.red-button:hover {
+    background-color: #c12a36;
+}
+
+.green-button:hover {
+    background-color: #1e7e34;
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
 }
